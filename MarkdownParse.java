@@ -21,10 +21,10 @@ public class MarkdownParse {
             else if(currentIndex<closeParen){
                 currentIndex = closeParen+1;
             }
+            if(markdown.substring(nextCloseBracket+2, closeParen).contains(" ") == false){
+                toReturn.add(markdown.substring(nextCloseBracket+2, closeParen));
+            }
             toReturn.add(markdown.substring(nextCloseBracket + 2, closeParen));
-
-            currentIndex = closeParen + 1;
-            System.out.println(currentIndex);
         }
         return toReturn;
     }
