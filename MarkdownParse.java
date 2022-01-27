@@ -24,7 +24,8 @@ public class MarkdownParse {
             if(markdown.substring(nextCloseBracket+2, closeParen).contains(" ") == false){
                 toReturn.add(markdown.substring(nextCloseBracket+2, closeParen));
             }
-            toReturn.add(markdown.substring(nextCloseBracket + 2, closeParen));
+            currentIndex=closeParen+1;
+                        
         }
         return toReturn;
     }
