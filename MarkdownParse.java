@@ -3,20 +3,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-
 public class MarkdownParse {
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
-        int exclamationIndex = -2;
         while(currentIndex < markdown.length()) {
-            int exclamationMark = markdown.indexOf("![", exclamationIndex);
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            int nextCloseBracket = markdown.indexOf("](", nextOpenBracket);
-            int closeParen = markdown.indexOf(")", nextCloseBracket);
-            if(currentIndex>closeParen || exclamationMark==nextOpenBracket-1){
+            int nextCloseBracket = markdown.indexOf("!]", nextOpenBracket+1);
+            int openParen = markdown.indexOf("!](", nextOpenBracket)+2;
+            //int openParen = markdown.indexOf("(", nextCloseBracket);
+            int closeParen = markdown.indexOf(")", openParen);
+            if(currentIndex>closeParen){
                 break;
             }
             else if(currentIndex<closeParen){
@@ -25,10 +24,15 @@ public class MarkdownParse {
             if(markdown.substring(nextCloseBracket+2, closeParen).contains(" ") == false){
                 toReturn.add(markdown.substring(nextCloseBracket+2, closeParen));
             }
-            currentIndex=closeParen+1;
+
+            String sub=markdown.substring(openParen+1, closeParen);
+            if(!sub.contains(" ")){
+                toReturn.add(sub);
+            }
 
         }
         return toReturn;
+
     }
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);
