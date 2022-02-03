@@ -21,6 +21,7 @@ public class MarkdownParse {
             ) {
                 break;
             }
+
             
             if (nextOpenBracket > 0 &&
                 markdown.charAt(nextOpenBracket - 1) == '!' ||
@@ -34,6 +35,7 @@ public class MarkdownParse {
             currentIndex = closeParen + 1;
             // System.out.println(currentIndex);
         }
+
         return toReturn;
     }
     public static void main(String[] args) throws IOException {
